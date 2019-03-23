@@ -1,0 +1,34 @@
+#!/bin/bash
+echo "ПРиВеТ"
+
+
+while [ -n "$1" ]
+do
+case "$1" in
+-h) echo "Данный скрипт подсчитывает числа строк в исходных файлах (*.h, *.cpp) директории и подкаталогов с вычилением суммарной длины (в строках) ";;
+esac
+shift
+done
+
+
+read -p "Вы хотите остаться в данной директории для поиска?[y/n]: " answer
+case $answer in
+y) path=. ;;
+n) read -p "Введите директорию для поиска: " path;;
+esac
+
+
+find $path \( -name '*.cpp' -or -name '*.h' \) -exec wc -l {} \+  
+
+find $path \( -name '*.cpp' -or -name '*.h' \) -exec wc -l {} \+ > trash
+
+if [[ -s trash ]]
+then 
+echo "Найдены файлы"
+else
+echo "Нет таких файлов"
+fi
+
+echo "Для получения информации что делает скрипт, введите ключ -h"
+
+echo -n > trash
